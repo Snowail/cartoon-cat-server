@@ -7,45 +7,57 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/metro.min.js"></script>
 	<script src="js/util.js"></script>
-	<style type="text/css">
-		.list a {
-			color: white;
-			font-size: 16px;
+	<script src="js/lazeload.js"></script>
+	<style>
+		#img-list {
+			width: 960px;
+			margin: 0 auto;
+		}
+		#img-list p {
+			display: inline-block;
+			width: 960px;
+			margin: 5px auto;
+			text-align: center;
+		}
+		#img-list img {
+			width: 960px;
+			display: inline-block;
+			margin: 0 auto;
 		}
 	</style>
 </head>
 <body class="bg-grayLighter">
-	<h1 id="cartoon-title" style="margin: 20px auto 20px 20px"></h1>
-	<div class="listview list-type-tiles" id="list">
-    </div>
+	<div id="img-list"></div>
 	<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
-		<h1>Wrong</h1>
-		<p id="wrong-content">
-		</p>
-		<span class="dialog-close-button"></span>
+	    <h1>Wrong</h1>
+	    <p id="wrong-content">
+	    </p>
+	    <span class="dialog-close-button"></span>
 	</div>
-</body>
+
 <script>
-
 $(function() {
+	var img_list = $('#img-list');
 	var cartoon = getQueryString('cartoon');
-    document.title = cartoon;
-	$('#cartoon-title').html(cartoon);
-	var list = $('#list');
+	document.title = cartoon;
+
 	var host = window.location.host;
-	$.getJSON('http://' + host + '/get_chapter_list?cartoon=' + cartoon, function(data) {
-		if (data['code'] != 0) {
-		    $('#wrong-content').text(JSON.stringify(data));
-            metroDialog.open('#dialog');
-            return;
-		}
-		var chapter_list = data['chapter'];
-		chapter_list.forEach(function(data) {
-			list.append('<div class="list bg-grayLight"><a href="chapter.html?cartoon=' + cartoon + '&chapter=' + data + '" target="_blank"><span class="list-title">' + data + '</span></a></div>')
+	$.getJSON('http://' + host + '/get_img_list?cartoon=' + cartoon,
+		function (data) {
+	        if (data['code'] != 0) {
+                $('#wrong-content').text(JSON.stringify(data));
+                metroDialog.open('#dialog');
+                return;
+            }
+			var urls = data['img'];
+			urls.forEach(function (url) {
+				img_list.append(
+					'<p><img src="./img/loading.png" lazy-src="'+ url +'"/></p>'
+					);
+			});
+			new LazyLoad().init();
 		});
-	});
-
 });
-
 </script>
+</body>
 </html>
