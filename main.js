@@ -122,7 +122,7 @@ app.get('/get_img_list', function (req, res) {
             res.jsonp(ErrorHelper.not_found(cartoon));
             return;
         }
-        fs.readdir(cartoon_dir + '/' , function (err, images) {
+        fs.readdir(cartoon_dir, function (err, images) {
             if (err) {
                 res.jsonp(ErrorHelper.error_param('cartoon', cartoon));
                 return;
