@@ -62,38 +62,38 @@ app.get('/get_cartoon_list', function (req, res) {
 /**
  * 获取章节信息
  */
-app.get('/get_chapter_list', function (req, res) {
+// app.get('/get_chapter_list', function (req, res) {
 
-    var cartoon = req.query.cartoon;
-    if (!cartoon) {
-        res.jsonp(ErrorHelper.missing_param('cartoon'));
-        return;
-    }
-
-    if (!checkParam(cartoon)) {
-        res.jsonp(ErrorHelper.error_param('cartoon', cartoon));
-        return;
-    }
-    var cartoon_dir = __dirname + '/public/store/' + cartoon;
-    fs.exists(cartoon_dir + '/index', function (exists) {
-        if (!exists) {
-            res.jsonp(ErrorHelper.not_found(cartoon));
-            return;
-        }
-        fs.readFile(cartoon_dir + '/index', function (err, data) {
-            if (err) {
-                res.jsonp(ErrorHelper.internal_error());
-                return;
-            }
-
-            var chapter_list = data.toString().split('\n').filter(function (d) {
-                return d.length > 0;
-            });
-
-            res.jsonp({'chapter': chapter_list, 'code': 0});
-        });
-    });
-});
+//     var cartoon = req.query.cartoon;
+//     if (!cartoon) {
+//         res.jsonp(ErrorHelper.missing_param('cartoon'));
+//         return;
+//     }
+//
+//     if (!checkParam(cartoon)) {
+//         res.jsonp(ErrorHelper.error_param('cartoon', cartoon));
+//         return;
+//     }
+//     var cartoon_dir = __dirname + '/public/store/' + cartoon;
+//     fs.exists(cartoon_dir + '/index', function (exists) {
+//         if (!exists) {
+//             res.jsonp(ErrorHelper.not_found(cartoon));
+//             return;
+//         }
+//         fs.readFile(cartoon_dir + '/index', function (err, data) {
+//             if (err) {
+//                 res.jsonp(ErrorHelper.internal_error());
+//                 return;
+//             }
+//
+//             var chapter_list = data.toString().split('\n').filter(function (d) {
+//                 return d.length > 0;
+//             });
+//
+//             res.jsonp({'chapter': chapter_list, 'code': 0});
+//         });
+//     });
+// });
 
 app.get('/get_img_list', function (req, res) {
 
@@ -106,7 +106,7 @@ app.get('/get_img_list', function (req, res) {
         res.jsonp(ErrorHelper.error_param('cartoon', cartoon));
         return;
     }
-    var chapter = req.query.chapter;
+    // var chapter = req.query.chapter;
     // if (!chapter) {
     //     res.jsonp(ErrorHelper.missing_param('chapter'));
     //     return;
@@ -133,7 +133,7 @@ app.get('/get_img_list', function (req, res) {
             });
 
             var urls = images.map(function (image) {
-                return 'http://' + HOST + ':' + PORT + '/store/' + cartoon + '/' + chapter + '/' + image;
+                return 'http://' + HOST + ':' + PORT + '/store/' + cartoon + '/' + '/' + image;
             });
             res.jsonp({'img': urls, 'code': 0});
         });
