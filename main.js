@@ -107,14 +107,14 @@ app.get('/get_img_list', function (req, res) {
         return;
     }
     var chapter = req.query.chapter;
-    if (!chapter) {
-        res.jsonp(ErrorHelper.missing_param('chapter'));
-        return;
-    }
-    if (!checkParam(chapter)) {
-        res.jsonp(ErrorHelper.error_param('chapter', chapter));
-        return;
-    }
+    // if (!chapter) {
+    //     res.jsonp(ErrorHelper.missing_param('chapter'));
+    //     return;
+    // }
+    // if (!checkParam(chapter)) {
+    //     res.jsonp(ErrorHelper.error_param('chapter', chapter));
+    //     return;
+    // }
 
     var cartoon_dir = __dirname + '/public/store/' + cartoon;
     fs.exists(cartoon_dir + '/index', function (exists) {
@@ -122,9 +122,9 @@ app.get('/get_img_list', function (req, res) {
             res.jsonp(ErrorHelper.not_found(cartoon));
             return;
         }
-        fs.readdir(cartoon_dir + '/' + chapter, function (err, images) {
+        fs.readdir(cartoon_dir + '/' , function (err, images) {
             if (err) {
-                res.jsonp(ErrorHelper.error_param('chapter', chapter));
+                res.jsonp(ErrorHelper.error_param('cartoon', cartoon));
                 return;
             }
             // 按名字排序
