@@ -3,7 +3,7 @@ var fs = require("fs");
 
 var app = express();
 
-var HOST = "manga.snowail.me"; // 如果不是在本机上使用，请改成实际的ip地址
+var HOST = "manga.snowail.com"; // 如果不是在本机上使用，请改成实际的ip地址
                         // 后面的图片的URL会使用这个变量来构造
 var PORT = 3000;
 
